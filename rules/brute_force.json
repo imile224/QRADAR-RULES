@@ -1,5 +1,5 @@
 {
-  "name": "Brute Force Detect",
+  "name": "Brute Force Detection",
   "type": "OFFENSE",
   "enabled": true,
   "origin": "USER",
