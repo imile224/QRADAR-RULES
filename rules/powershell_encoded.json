@@ -1,0 +1,36 @@
+{
+  "name": "SOC-APT-PowerShell-Encoded-Command",
+  "type": "EVENT",
+  "description": "Base64 ilə kodlanmış şübhəli PowerShell əmrlərini aşkar edir.",
+  "enabled": true,
+  "average_capacity": 0,
+  "capacity_unit": "EVENTS_PER_SECOND",
+  "owner": "admin",
+  "identifier": "rule_ps_encoded_001",
+  "tests": [
+    {
+      "test_type": "TEXT_SEARCH",
+      "parameter_values": [
+        {
+          "name": "search_text",
+          "value": "-encodedcommand"
+        },
+        {
+          "name": "case_sensitive",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "OFFENSE",
+      "parameter_values": [
+        {
+          "name": "offense_description",
+          "value": "Şübhəli Encoded PowerShell Əmri İşə Düşdü"
+        }
+      ]
+    }
+  ]
+}
