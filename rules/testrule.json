@@ -1,6 +1,10 @@
 {
   "name": "Test Rule",
+  "type": "EVENT",
   "enabled": true,
   "base_capacity_per_second": 0,
-  "description": "Base64 encoded PowerShell detection"
+  "description": "Detects encoded PowerShell commands in logs",
+  "origin": "USER",
+  "owner": "admin",
+  "id": 100001
 }
