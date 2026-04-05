@@ -1,7 +1,6 @@
 {
-  "name": "SOC-Test-Rule-001",
-  "type": "EVENT",
+  "name": "Test Rule",
   "enabled": true,
   "base_capacity_per_second": 0,
-  "description": "API Test Rule"
+  "description": "Base64 encoded PowerShell detection"
 }
