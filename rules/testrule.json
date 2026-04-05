@@ -1,0 +1,7 @@
+{
+  "name": "SOC-Test-Rule-001",
+  "type": "EVENT",
+  "enabled": true,
+  "base_capacity_per_second": 0,
+  "description": "API Test Rule"
+}
