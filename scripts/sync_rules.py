@@ -18,17 +18,17 @@ def sync_rule(file_path):
     with open(file_path, 'r') as f:
         rule_content = json.load(f)
     
-    # Yeni endpoint: analytics deyil, config/event_rules olmalıdır
-    url = f"https://{QRADAR_IP}/api/config/event_rules"
+    # Ən universal endpoint
+    url = f"https://{QRADAR_IP}/api/analytics/rules"
     
     try:
-        response = requests.post(url, headers=headers, json=rule_content, verify=False)
+        response = requests.post(url, headers=headers, data=json.dumps(rule_content), verify=False)
         print(f"Fayl: {file_path} | Status: {response.status_code}")
         
         if response.status_code in [200, 201]:
-            print("Uğurla QRadar-a əlavə edildi!")
+            print("Uğurla əlavə edildi!")
         else:
-            print(f"Xəta mesajı: {response.text}")
+            print(f"Xəta Mesajı: {response.text}")
             
     except Exception as e:
         print(f"Bağlantı xətası: {str(e)}")
