@@ -1,0 +1,27 @@
+name: Deploy Rules to QRadar
+
+on:
+  push:
+    paths:
+      - 'rules/**'  # Yalnız rules qovluğunda dəyişiklik olanda işləsin
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Sync Script
+        env:
+          QRADAR_API_TOKEN: ${{ secrets.QRADAR_API_TOKEN }}
+          QRADAR_IP: ${{ secrets.QRADAR_IP }}
+        run: python scripts/sync_rules.py
