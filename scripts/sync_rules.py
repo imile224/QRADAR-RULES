@@ -3,8 +3,8 @@ import requests
 import json
 
 # Bu məlumatları GitHub Secrets-dən götürəcəyik (Təhlükəsizlik üçün)
-QRADAR_IP = os.getenv('54.208.168.148')
-API_TOKEN = os.getenv('bbae5988-6450-4560-b68c-dbaaf81bbbfc')
+QRADAR_IP = os.getenv('QRADAR_IP')
+API_TOKEN = os.getenv('QRADAR_API_TOKEN')
 
 headers = {
     'SEC': API_TOKEN,
