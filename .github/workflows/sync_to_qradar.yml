@@ -23,7 +23,7 @@ jobs:
         run: pip install requests
 
       - name: Sync with QRadar API
+        run: python scripts/deploy.py
         env:
           QRADAR_IP: ${{ secrets.QRADAR_IP }}
           QRADAR_API_KEY: ${{ secrets.QRADAR_API_KEY }}
-        run: python scripts/deploy.py
