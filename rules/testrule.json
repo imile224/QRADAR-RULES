@@ -1,10 +1,6 @@
 {
-  "name": "Test Rule",
-  "type": "EVENT",
+  "name": "SOC-APT-PowerShell-Encoded-Command",
   "enabled": true,
   "base_capacity_per_second": 0,
-  "description": "Detects encoded PowerShell commands in logs",
-  "origin": "USER",
-  "owner": "admin",
-  "id": 100001
+  "description": "Detection of base64 encoded powershell commands"
 }
