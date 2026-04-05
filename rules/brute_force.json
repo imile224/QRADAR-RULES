@@ -1,0 +1,9 @@
+{
+  "name": "Brute Force",
+  "type": "OFFENSE",
+  "enabled": true,
+  "origin": "USER",
+  "owner": "admin",
+  "average_capacity": 0,
+  "base_capacity": 0
+}
