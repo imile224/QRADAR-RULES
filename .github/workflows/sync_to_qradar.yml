@@ -1,0 +1,29 @@
+name: QRadar CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'rules/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Requests
+        run: pip install requests
+
+      - name: Sync with QRadar API
+        env:
+          QRADAR_IP: ${{ secrets.QRADAR_IP }}
+          QRADAR_API_KEY: ${{ secrets.QRADAR_API_KEY }}
+        run: python scripts/deploy.py
