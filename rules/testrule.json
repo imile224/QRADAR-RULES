@@ -1,6 +1,0 @@
-{
-  "name": "SOC-APT-PowerShell-Encoded-Command",
-  "enabled": true,
-  "base_capacity_per_second": 0,
-  "description": "Detection of base64 encoded powershell commands"
-}
