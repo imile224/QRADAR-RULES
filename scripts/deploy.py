@@ -4,7 +4,7 @@ QRADAR_IP = os.getenv('QRADAR_IP')
 API_KEY = os.getenv('QRADAR_API_KEY')
 
 headers = {
-    'SEC': API_KEY,
+    'SEC': f"{API_KEY}",
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Version': '27.0'
