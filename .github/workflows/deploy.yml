@@ -1,0 +1,26 @@
+name: Deploy QRadar Rules
+
+on:
+  push:
+    paths:
+      - 'rules/*.xml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo clone
+        uses: actions/checkout@v3
+
+      - name: Python qur
+        uses: actions/setup-python@v4
+
+      - name: Requests install
+        run: pip install requests
+
+      - name: QRadar-a gonder
+        env:
+          QRADAR_IP: ${{ secrets.QRADAR_IP }}
+          QRADAR_API_TOKEN: ${{ secrets.QRADAR_API_TOKEN }}
+        run: python scripts/deploy.py
