@@ -1,17 +1,17 @@
 {
-  "name": "GitHub: New User Created (ID 4720)",
-  "type": "EVENT",
+  "name": "GitHub: New User Created (ID 4720) - Fixed",
   "enabled": true,
-  "base_capacity": 0,
   "responses": {
     "create_offense": true,
     "offense_naming_type": "RULE_NAME"
   },
   "tests": [
     {
-      "type": "PROPERTY_IS_EQUAL",
-      "property": "EventID",
-      "value": "4720"
+      "type": "property_is_equal",
+      "negate": false,
+      "property_name": "EventID",
+      "property_value": "4720"
     }
-  ]
+  ],
+  "type": "EVENT_RULE"
 }
