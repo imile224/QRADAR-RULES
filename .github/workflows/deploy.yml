@@ -1,0 +1,29 @@
+name: Deploy Rules to QRadar
+
+on:
+  push:
+    paths:
+      - 'rules/**' # Yalnız rules qovluğunda dəyişiklik olanda işə düşür
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Deploy to QRadar
+        env:
+          QRADAR_URL: ${{ secrets.QRADAR_URL }}
+          SEC_TOKEN: ${{ secrets.SEC_TOKEN }}
+        run: |
+          python deploy_to_qradar.py
