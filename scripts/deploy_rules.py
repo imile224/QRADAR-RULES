@@ -4,9 +4,8 @@ import os
 import zipfile
 import io
 
-# GitHub Secrets-dən sənin təyin etdiyin adlarla oxuyuruq
 QRADAR_IP = os.getenv("QRADAR_IP")
-API_TOKEN = os.getenv("QRADAR_API_KEY") # Secret adına uyğun dəyişdirildi
+API_TOKEN = os.getenv("QRADAR_API_KEY")
 
 HEADERS = {
     "SEC": API_TOKEN,
@@ -14,15 +13,29 @@ HEADERS = {
 }
 
 def create_extension_zip(rule_files):
-    """JSON fayllarını QRadar Extension formatında ZIP-ləyir"""
+    """QRadar-ın tələb etdiyi XML manifesti ilə birgə ZIP yaradır"""
     zip_buffer = io.BytesIO()
+    
+    # QRadar-ın 422 xətası verməməsi üçün lazım olan XML strukturu
+    xml_content = """<?xml version="1.0" encoding="UTF-8"?>
+    <content-extension>
+        <name>GitHub-Detections</name>
+        <description>Rules deployed from GitHub Actions</description>
+        <version>1.0</version>
+    </content-extension>
+    """
+
     with zipfile.ZipFile(zip_buffer, "a", zipfile.ZIP_DEFLATED, False) as zip_file:
+        # 1. Vacib olan XML faylını əlavə edirik
+        zip_file.writestr("extension.xml", xml_content)
+        
+        # 2. Sənin JSON qaydalarını əlavə edirik
         for file_path in rule_files:
             zip_file.write(file_path, os.path.basename(file_path))
+            
     return zip_buffer.getvalue()
 
 def deploy_as_extension():
-    # Extension management endpoint-i
     url = f"https://{QRADAR_IP}/api/config/extension_management/extensions"
     
     rule_folder = "detections/"
@@ -33,23 +46,20 @@ def deploy_as_extension():
     rule_files = [os.path.join(rule_folder, f) for f in os.listdir(rule_folder) if f.endswith(".json")]
     
     if not rule_files:
-        print("Heç bir qayda (.json) faylı tapılmadı.")
+        print("JSON faylı tapılmadı.")
         return
 
-    print(f"Paketlənməyə hazır fayllar: {rule_files}")
+    print("Paket hazırlanır...")
     zip_data = create_extension_zip(rule_files)
     
     files = {'file': ('extension.zip', zip_data, 'application/zip')}
     
-    # QRadar-a göndəririk
     try:
-        response = requests.post(url, headers=HEADERS, files=files, verify=False, timeout=30)
+        # timeout-u bir az artıraq çünki extension emalı vaxt aparır
+        response = requests.post(url, headers=HEADERS, files=files, verify=False, timeout=60)
         
         if response.status_code in [200, 201, 202]:
-            print("✅ UĞURLU: Qaydalar QRadar-a Extension olaraq yükləndi.")
-            print(f"Cavab: {response.text}")
-        elif response.status_code == 401:
-            print("❌ XƏTA 401: Unauthorized. API Key yanlışdır və ya Token-in 'Admin' yetkisi yoxdur.")
+            print("✅ UĞURLU: QRadar paketi qəbul etdi və emal edir.")
         else:
             print(f"❌ XƏTA {response.status_code}: {response.text}")
             
