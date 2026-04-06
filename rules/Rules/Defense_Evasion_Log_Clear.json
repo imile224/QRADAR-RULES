@@ -1,0 +1,14 @@
+{
+  "name": "Sigma - Security Event Log Cleared (T1070.001)",
+  "description": "Windows Security (1102) ve ya System (104) loglarin silinmesini askar edir. MITRE T1070.001.",
+  "enabled": true,
+  "severity": 9,
+  "type": "ADEQUAL_RULE",
+  "filter_expressions": [
+    {
+      "expression": "SELECT * FROM events WHERE LOGSOURCETYPENAME(devicetype) ILIKE '%Windows%' AND eventid IN (1102, 104) AND NOT (LOWER(username) = 'system' AND eventid = 104)",
+      "expression_type": "AQL"
+    }
+  ],
+  "notes": "EID 1102 (Security) ve EID 104 (System) log temizlenmesini izleyir. Yuksek riskli insidentdir."
+}
