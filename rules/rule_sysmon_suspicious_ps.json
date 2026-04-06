@@ -1,0 +1,35 @@
+{
+  "name": "Custom: Suspicious PowerShell Encoded Command",
+  "description": "Detects execution of powershell.exe with -enc or -EncodedCommand arguments using Sysmon logs.",
+  "type": "MAPPING",
+  "enabled": true,
+  "responses": {
+    "dispatch_new_event": true,
+    "event_description": "Suspicious Encoded PowerShell Execution",
+    "event_name": "Suspicious PowerShell"
+  },
+  "tests": [
+    {
+      "uid": "1",
+      "type": "AndTest",
+      "text": "when the event matches Sysmon Event ID 1 and contains -enc",
+      "tests": [
+        {
+          "type": "EventPropertyTest",
+          "property": "Log Source Type",
+          "operator": "EQUALS",
+          "value": "Microsoft Windows Sysmon"
+        },
+        {
+          "type": "PayloadContainsTest",
+          "text": "-enc",
+          "ignore_case": true
+        }
+      ]
+    }
+  ],
+  "rule_action": {
+    "create_offense": true,
+    "offense_type": "Username"
+  }
+}
