@@ -16,8 +16,8 @@ from datetime import datetime, timedelta
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-QRADAR_HOST  = os.environ.get('QRADAR_URL', '')
-QRADAR_TOKEN = os.environ.get('QRADAR_API_KEY', '')
+QRADAR_HOST  = os.environ.get('QRADAR_HOST', '')
+QRADAR_TOKEN = os.environ.get('QRADAR_SEC_TOKEN', '')
 
 if not QRADAR_HOST or not QRADAR_TOKEN:
     print("XETA: QRADAR_HOST ve ya QRADAR_SEC_TOKEN tapilmadi!")
