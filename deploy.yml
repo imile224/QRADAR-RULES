@@ -1,4 +1,4 @@
-name: QRadar Rules Deploy Pipeline
+name: QRadar Rules Deploy Automation
 
 on:
   push:
