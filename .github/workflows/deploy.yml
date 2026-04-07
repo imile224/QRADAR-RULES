@@ -1,5 +1,4 @@
-
-name: QRadar Rules Deploy Automation
+name: QRadar Rules Deploy Pipeline
 
 on:
   push:
@@ -73,8 +72,8 @@ jobs:
 
       - name: QRadar-a deploy et
         env:
-          QRADAR_HOST:      ${{ secrets.QRADAR_URL }}
-          QRADAR_SEC_TOKEN: ${{ secrets.QRADAR_API_KEY }}
+          QRADAR_HOST:      ${{ secrets.QRADAR_HOST }}
+          QRADAR_SEC_TOKEN: ${{ secrets.QRADAR_SEC_TOKEN }}
         run: python3 scripts/deploy_rules.py
 
       - name: Deploy neticesini goster
