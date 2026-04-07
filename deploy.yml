@@ -72,8 +72,8 @@ jobs:
 
       - name: QRadar-a deploy et
         env:
-          QRADAR_HOST:      ${{ secrets.QRADAR_HOST }}
-          QRADAR_SEC_TOKEN: ${{ secrets.QRADAR_SEC_TOKEN }}
+          QRADAR_HOST:      ${{ secrets.QRADAR_IP }}
+          QRADAR_SEC_TOKEN: ${{ secrets.QRADAR_API_TOKEN }}
         run: python3 scripts/deploy_rules.py
 
       - name: Deploy neticesini goster
