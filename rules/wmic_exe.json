@@ -1,0 +1,14 @@
+{
+  "name": "Sigma - Suspicious WMIC Execution (T1047)",
+  "description": "WMIC vasitesile uzaqdan kod icrasi (RCE) ve ya Shadow Copy silinmesini askar edir. MITRE T1047.",
+  "enabled": true,
+  "severity": 8,
+  "type": "ADEQUAL_RULE",
+  "filter_expressions": [
+    {
+      "expression": "SELECT * FROM events WHERE LOGSOURCETYPENAME(devicetype) ILIKE '%Windows%' AND eventid IN (4688, 1) AND LOWER(UTF8(payload)) LIKE '%wmic.exe%' AND (LOWER(UTF8(payload)) LIKE '%process call create%' OR LOWER(UTF8(payload)) LIKE '%/node:%' OR LOWER(UTF8(payload)) LIKE '%shadowcopy delete%' OR LOWER(UTF8(payload)) LIKE '%computersystem%') AND NOT (LOWER(username) = 'system' OR LOWER(UTF8(payload)) LIKE '%sccm%')",
+      "expression_type": "AQL"
+    }
+  ],
+  "notes": "T1047 | wmic process call create birbase RCE-dir. Shadowcopy delete ransomware gostericisidir."
+}
