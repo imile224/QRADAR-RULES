@@ -14,6 +14,11 @@ import time
 import urllib3
 from datetime import datetime, timedelta
 
+# Git-in sistem fayllarına (/etc/gitconfig) toxunub "Permission Denied" xətası 
+# verməməsi üçün mühit dəyişənlərini skript daxilində set edirik.
+os.environ['GIT_CONFIG_NOSYSTEM'] = '1'
+os.environ['GIT_CONFIG_GLOBAL'] = '/tmp/.gitconfig'
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 QRADAR_HOST  = os.environ.get('QRADAR_HOST', '')
@@ -40,7 +45,6 @@ def build_aql(aql_template):
     aql = re.sub(r'LAST\s+\d+\s+SECONDS', '', aql)
 
     # SELECT-deki payload sutununu UTF8(payload)-e cevir
-    # FROM-dan once olan payload-leri deyis
     select_part = re.search(r'SELECT(.+?)FROM', aql, re.DOTALL | re.IGNORECASE)
     if select_part:
         select_fixed = re.sub(
@@ -173,6 +177,11 @@ def process_rule(rule_data):
 
 # ── Əsas funksiya ──────────────────────────────────────────────────
 def main():
+    # Git konfiqurasiyasini dummy fayla yönləndiririk ki, /etc/gitconfig kilidlənməsin
+    if not os.path.exists('/tmp/.gitconfig'):
+        with open('/tmp/.gitconfig', 'w') as f:
+            f.write('[user]\n\tname = QRadarDeploy\n\temail = deploy@local\n')
+
     print("=" * 55)
     print("  QRadar JSON+AQL Deploy — GitHub Actions")
     print("=" * 55)
